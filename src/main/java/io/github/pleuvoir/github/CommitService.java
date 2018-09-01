@@ -2,5 +2,5 @@ package io.github.pleuvoir.github;
 
 public interface CommitService {
 
-	void commit(String contents,String path);
+	void commit(String content);
 }

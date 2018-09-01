@@ -1,82 +1,78 @@
 package io.github.pleuvoir.kit;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.List;
+import java.net.URI;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-import org.kohsuke.github.GHContent;
-import org.kohsuke.github.GHRepository;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
-import lombok.extern.slf4j.Slf4j;
+import io.github.pleuvoir.common.ExchangeConfiguration;
+import lombok.SneakyThrows;
 
-@Slf4j
 public class GithubKit {
-
-	public static void checkPathExist(GHRepository repository, String path) {
-		String decodedPath = decodeUTF8(path);
-		log.info("检查仓库【{}】路径【{}】是否存在", repository.getName(), decodedPath);
-		try {
-			repository.getDirectoryContent(path);
-		} catch (IOException e) {
-			if (e instanceof FileNotFoundException) {
-				log.warn("仓库【{}】路径【{}】不存在，开始本地创建路径", repository.getName(), decodedPath);
-				mkdir("D://".concat(decodedPath));
-			}
-		}
-
-	}
-
-	public static String encodeUTF8(String encode){
-		try {
-			return URLEncoder.encode(encode, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			log.error("encodeUTF8 error，{}",e);
-		}
-		return null;
+	
+	/**
+	 * 今日目录
+	 */
+	public static String todayCatalogue() {
+		String now = DateTimeFormatter.ofPattern("yyyy/MM").format(LocalDateTime.now());
+		String todayCatalogue = "摘录/".concat(now);
+		return todayCatalogue;
 	}
 	
-	public static String decodeUTF8(String decode) {
-		try {
-			return URLDecoder.decode(decode, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			log.error("decodeUTF8 error，{}",e);
-		}
-		return null;
+	/**
+	 * 今日文件名称
+	 */
+	public static String todayFileName() {
+		return DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now()).concat(".md");
+	}
+	
+	/**
+	 * 从文件地址获取字节数组
+	 * @param downloadUrl	文件地址
+	 * @return
+	 */
+	@SneakyThrows
+	public static byte[] fetchFileInputStream(String downloadUrl) {
+		RestTemplate restTemplate = new ExchangeConfiguration().restTemplate();
+		URI uri = new URI(downloadUrl);
+		ResponseEntity<byte[]> responseEntity = restTemplate.exchange(RequestEntity.get(uri).build(), byte[].class);  
+		return responseEntity.getBody();
 	}
 	
 	
-	private static void createFile(String pathname) {
-		File file = new File(pathname);
-		try {
-			file.createNewFile();
-			log.info("文件创建成功，pathname：{}", pathname);
-		} catch (IOException e) {
-			log.error("创建文件失败，pathname：{}", pathname);
-		}
+	/**
+	 * 将文本内容转为字节数组
+	 * @param content	文本内容
+	 * @return
+	 */
+	public static byte[] addContent(String content) {
+		String origin = new String("").concat("\r\n\r\n").concat(content);
+		return origin.getBytes();
 	}
 	
-	
-	
-	private static void mkdir(String pathname) {
-		File file = new File(pathname);
-		boolean mkdir = file.mkdirs();
-		if (mkdir) {
-			log.info("文件夹创建成功，pathname：{}", pathname);
-		} else {
-			log.error("文件夹创建失败，pathname：{}", pathname);
-			System.exit(0);
-		}
+	/**
+	 * 向字节数组中尾部增加文本内容，并以字节数组形式返回
+	 * @param bytes		原始文件字节数组
+	 * @param content	向尾部追加的文本内容
+	 * @return
+	 */
+	public static byte[] addContent(byte[] bytes, String content) {
+		String origin = new String(bytes).concat("\r\n\r\n").concat(content);
+		return origin.getBytes();
 	}
 	
-	
-	public static void main(String[] args) {
-		File file = new File("D://摘录/2018/09");
-		boolean mkdir = file.mkdirs();
-		System.out.println(mkdir);
+	/**
+	 * 从文件地址获取字节数组并向尾部增加文本内容，并以字节数组形式返回
+	 * @param downloadUrl	文件地址
+	 * @param content		向尾部追加的文本内容
+	 * @return
+	 */
+	public static byte[] addContent(String downloadUrl, String content) {
+		String origin = new String(fetchFileInputStream(downloadUrl)).concat("\r\n\r\n").concat(content);
+		return origin.getBytes();
 	}
 	
 }
