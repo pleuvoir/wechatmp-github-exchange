@@ -16,13 +16,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class TargetRepositoryCommitServiceTests {
 
 	@Autowired
-	private CommitService commitService;
+	private GithubCommitService commitService;
 	
 
 	@Test
 	public void contextLoads() throws URISyntaxException, IOException  { 
 		commitService.commit("today is my lucky day " + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
 	}
-	
 	
 }

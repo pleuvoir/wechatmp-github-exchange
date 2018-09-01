@@ -1,0 +1,16 @@
+logging:
+  level:
+    org.springframework.web: INFO  
+    
+wechatmp:
+    configs:
+      - appId:  开发者ID(AppID)
+        secret: 开发者密码(AppSecret) 
+        token:  令牌(Token)
+        aesKey: 消息加解密密钥(EncodingAESKey)
+
+github:
+      username: github 帐号
+      oauthAccessToken: 访问令牌
+      targetRepository: 待提交仓库  
+

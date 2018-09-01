@@ -11,34 +11,40 @@ import org.apache.http.protocol.HttpContext;
 import org.kohsuke.github.GHMyself;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
-import io.github.pleuvoir.kit.StatefullRestTemplate;
+import io.github.pleuvoir.github.GithubProperties;
 import lombok.SneakyThrows;
 
 @Configuration
+@EnableConfigurationProperties(GithubProperties.class)
 public class ExchangeConfiguration {
-
-	@Value("${username}")
-	private String username;
-	@Value("${oauthAccessToken}")
-	private String oauthAccessToken;
-	@Value("${targetRepository}")
-	private String targetRepository;
+	
+	@Autowired
+	private GithubProperties githubProperties;
 	
 	@PostConstruct
 	@SneakyThrows
 	@Bean
 	public GHRepository initGHRepository() {
-		GitHub github = GitHub.connect(username, oauthAccessToken);
+		GitHub github = GitHub.connect(githubProperties.getUsername(), githubProperties.getOauthAccessToken());
 		GHMyself myself = github.getMyself();
-		GHRepository repository = myself.getRepository(targetRepository);
+		GHRepository repository = myself.getRepository(githubProperties.getTargetRepository());
 		return repository;
 	}
 	
+	@Bean
+	public ConfigurableServletWebServerFactory webServerFactory() {
+		TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
+		factory.setPort(9000);
+		return factory;
+	}
 	
 	@Bean
     public RestTemplate restTemplate() {
