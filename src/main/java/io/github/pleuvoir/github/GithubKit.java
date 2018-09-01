@@ -64,7 +64,7 @@ public class GithubKit {
 	 * @return
 	 */
 	public static byte[] addContent(byte[] bytes, String content) {
-		String origin = utfToString(bytes).concat("\r\n\r\n").concat(content);
+		String origin = new String(bytes).concat("\r\n\r\n").concat(content);
 		return origin.getBytes(Charset.forName("UTF-8"));
 	}
 	
@@ -75,7 +75,7 @@ public class GithubKit {
 	 * @return
 	 */
 	public static byte[] addContent(String downloadUrl, String content) {
-		String origin = utfToString(fetchFileInputStream(downloadUrl)).concat("\r\n\r\n").concat(content);
+		String origin = new String(fetchFileInputStream(downloadUrl)).concat("\r\n\r\n").concat(content);
 		return origin.getBytes(Charset.forName("UTF-8"));
 	}
 	
@@ -102,20 +102,5 @@ public class GithubKit {
 		}
 		return null;
 	}
-	
-	
-	/**
-	 * 安全的转化为字节数组，防止乱码
-	 * @param data
-	 * @return
-	 */
-	public static String utfToString(byte[] data) {
-		String str = null;
-		try {
-			str = new String(data, "utf-8");
-		} catch (UnsupportedEncodingException e) {
-		}
-		return str;
-	}
-	
+
 }

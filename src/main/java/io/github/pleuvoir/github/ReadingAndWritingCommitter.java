@@ -19,6 +19,7 @@ public class ReadingAndWritingCommitter implements GithubCommitService {
 	@Autowired
 	private GHRepository repository;
 
+	@SneakyThrows
 	@Override
 	public void commit(String content) {
 		String todayCatalogue = GithubKit.todayCatalogue();  						//	摘录/2018/09
@@ -34,7 +35,7 @@ public class ReadingAndWritingCommitter implements GithubCommitService {
 			
 			// 获取已存在文件流 并且将文本内容追加到末尾
 			byte[] addedContentBytes = GithubKit.addContent(downloadUrl, content);
-			log.info("更新后内容：{}", new String(addedContentBytes));
+			log.info("更新后内容：{}", new String(addedContentBytes, "UTF-8"));
 			// 提交文件
 			commitFile(addedContentBytes, todayFilePath, fileContent.getSha());
 			log.info("仓库【{}】文件【{}】已提交", repository.getName(), todayFilePath);
@@ -45,7 +46,7 @@ public class ReadingAndWritingCommitter implements GithubCommitService {
 			if (e instanceof FileNotFoundException) {
 				log.warn("仓库【{}】文件【{}】不存在，开始创建流文件", repository.getName(), todayFilePath);
 				byte[] addedContentBytes = GithubKit.addContent(content);
-				log.info("创建文件内容：{}", new String(addedContentBytes));
+				log.info("创建文件内容：{}", new String(addedContentBytes, "UTF-8"));
 				// 提交文件
 				commitFile(addedContentBytes, todayFilePath);
 				log.info("仓库【{}】文件【{}】已提交", repository.getName(), todayFilePath);
