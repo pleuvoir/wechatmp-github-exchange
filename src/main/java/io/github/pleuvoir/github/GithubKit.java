@@ -63,8 +63,9 @@ public class GithubKit {
 	 * @param content	向尾部追加的文本内容
 	 * @return
 	 */
+	@SneakyThrows
 	public static byte[] addContent(byte[] bytes, String content) {
-		String origin = new String(bytes).concat("\r\n\r\n").concat(content);
+		String origin = new String(bytes, "UTF-8").concat("\r\n\r\n").concat(content);
 		return origin.getBytes(Charset.forName("UTF-8"));
 	}
 	
@@ -74,8 +75,9 @@ public class GithubKit {
 	 * @param content		向尾部追加的文本内容
 	 * @return
 	 */
+	@SneakyThrows
 	public static byte[] addContent(String downloadUrl, String content) {
-		String origin = new String(fetchFileInputStream(downloadUrl)).concat("\r\n\r\n").concat(content);
+		String origin = new String(fetchFileInputStream(downloadUrl), "UTF-8").concat("\r\n\r\n").concat(content);
 		return origin.getBytes(Charset.forName("UTF-8"));
 	}
 	
