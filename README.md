@@ -20,7 +20,7 @@ github:
       targetRepository: 待提交仓库  
 ```
 
-打开 shell 或cmd，进入 ngrok 目录，运行 `ngrok -config ngrok.cfg -subdomain wechatmp-github-exchange 9000` 如果运行失败，请更换 `wechatmp-github-exchange` 为其它字符串，直至连接成功
+打开 shell 或 cmd，进入 ngrok 目录，运行 `ngrok -config ngrok.cfg -subdomain wechatmp-github-exchange 9000` 如果运行失败，请更换 `wechatmp-github-exchange` 为其它字符串，直至连接成功
 
 
 ### 打包运行
