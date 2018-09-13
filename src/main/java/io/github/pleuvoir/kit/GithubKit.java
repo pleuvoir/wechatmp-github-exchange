@@ -1,4 +1,4 @@
-package io.github.pleuvoir.github;
+package io.github.pleuvoir.kit;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URI;

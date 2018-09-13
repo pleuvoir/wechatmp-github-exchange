@@ -1,5 +1,8 @@
 package io.github.pleuvoir.common;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import javax.annotation.PostConstruct;
 
 import org.apache.http.client.CookieStore;
@@ -8,7 +11,6 @@ import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
-import org.kohsuke.github.GHMyself;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +36,7 @@ public class ExchangeConfiguration {
 	@Bean
 	public GHRepository initGHRepository() {
 		GitHub github = GitHub.connect(githubProperties.getUsername(), githubProperties.getOauthAccessToken());
-		GHMyself myself = github.getMyself();
-		GHRepository repository = myself.getRepository(githubProperties.getTargetRepository());
-		return repository;
+		return github.getMyself().getRepository(githubProperties.getTargetRepository());
 	}
 	
 	@Bean
@@ -44,6 +44,11 @@ public class ExchangeConfiguration {
 		TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
 		factory.setPort(9000);
 		return factory;
+	}
+	
+	@Bean(name = "singleExecutorService")
+	public ExecutorService initExecutorService() {
+		return Executors.newSingleThreadExecutor();
 	}
 	
 	@Bean
