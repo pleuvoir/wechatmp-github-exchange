@@ -15,6 +15,9 @@
    启动：打开 shell 或 cmd，进入 ngrok 目录，运行 `ngrok -config ngrok.cfg -subdomain           wechatmp-github-exchange 9000` 如果运行失败，更换 `wechatmp-github-exchange` 为其它字符串，直至连接成功。其中`wechatmp-github-exchange 9000` 为需要映射到外网的项目名称及端口。
 
 
+3. github 提交部分可参照已有实现，进行修改。
+
+
 ### 项目配置
 
 ```yml 
