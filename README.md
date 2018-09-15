@@ -39,6 +39,14 @@ mvn clean package
 java -jar wechatmp-github-exchange-1.0.0.jar
 ```
 
+### 项目结构
+
+如若在本地运行，请确保你的计算机已经安装如下环境
+
+- Maven3
+- Java8
+- [lombok](https://projectlombok.org/) 插件
+
 ### 已知问题
 
 在 eclipse 中如果 Installed JREs 选择的是 jre 则在 eclipse 中连接 github 没有问题，但是却无法打包，如果改为了 jdk，则可以打包，却无法在 eclipse 中连接 github 
