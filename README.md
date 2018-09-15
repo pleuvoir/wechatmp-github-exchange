@@ -4,7 +4,7 @@
 
 对微信公众号（订阅号）发送消息，会将内容推送到  [future-look](https://github.com/pleuvoir/future-look) 仓库
 
-### 说明
+### 简介
 
 #### 微信公众平台
 
