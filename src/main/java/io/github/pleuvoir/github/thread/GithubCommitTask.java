@@ -29,7 +29,7 @@ public class GithubCommitTask implements Runnable{
 	public void run() {
 		
 		// 每个线程进来都排队休息 5 分钟
-		TimeUnit.MINUTES.sleep(1);	
+		TimeUnit.MINUTES.sleep(5);	
 		
 		String todayCatalogue = GithubKit.todayCatalogue();  						//	摘录/2018/09
 		String todayFileName = GithubKit.todayFileName();							//	2018-09-01.md
