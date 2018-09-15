@@ -11,12 +11,8 @@
 
 
 2. ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。简单的说，就是通过 ngrok 实现内网穿透，使得外网可以访问本地项目。
-
-   启动方式：
     
-   打开 shell 或 cmd，进入 ngrok 目录，运行 `ngrok -config ngrok.cfg -subdomain           wechatmp-github-exchange 9000` 如果运行失败，请更    换 `wechatmp-github-exchange` 为其它字符串，直至连接成功。
-    
-   其中`wechatmp-github-exchange 9000` 为需要映射到外网的项目名称及端口。
+   启动：打开 shell 或 cmd，进入 ngrok 目录，运行 `ngrok -config ngrok.cfg -subdomain           wechatmp-github-exchange 9000` 如果运行失败，更换 `wechatmp-github-exchange` 为其它字符串，直至连接成功。其中`wechatmp-github-exchange 9000` 为需要映射到外网的项目名称及端口。
 
 
 ### 项目配置
