@@ -1,10 +1,27 @@
 # wechatmp-github-exchange
 
-微信公众号推送自动提交到 github 指定仓库
+
+### 功能
+
+对微信公众号（订阅号）发送消息，会将内容推送到  [future-look](https://github.com/pleuvoir/future-look) 仓库
 
 ### 说明
 
-[微信公众平台官网](https://mp.weixin.qq.com)
+#### ngrok
+
+ngrok 是一个反向代理，通过在公共的端点和本地运行的 Web 服务器之间建立一个安全的通道。简单的说，就是通过 ngrok 实现内网穿透，使得外网可以访问本地项目。
+
+启动方式：
+
+打开 shell 或 cmd，进入 ngrok 目录，运行 `ngrok -config ngrok.cfg -subdomain wechatmp-github-exchange 9000` 如果运行失败，请更换 `wechatmp-github-exchange` 为其它字符串，直至连接成功
+
+#### 微信公众平台
+
+首先去 [微信公众平台官网](https://mp.weixin.qq.com) 申请微信公众号，个人开发者一般申请订阅号。
+申请成功后，公众平台提供了开发者功能，只要正确配置了服务器 URL 并启用，那么当微信公众号收到消息会被转发到 本地 Web 项目，从而使得开发有了无限可能。
+
+
+### 配置文件
 
 ```yml 
 wechatmp:
@@ -20,8 +37,6 @@ github:
       targetRepository: 待提交仓库  
 ```
 
-打开 shell 或 cmd，进入 ngrok 目录，运行 `ngrok -config ngrok.cfg -subdomain wechatmp-github-exchange 9000` 如果运行失败，请更换 `wechatmp-github-exchange` 为其它字符串，直至连接成功
-
 
 ### 打包运行
 
@@ -29,7 +44,6 @@ github:
 mvn clean package
 java -jar wechatmp-github-exchange-1.0.0.jar
 ```
-
 
 ### 注意
 

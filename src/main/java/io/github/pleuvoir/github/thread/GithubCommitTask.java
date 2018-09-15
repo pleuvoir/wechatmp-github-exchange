@@ -29,12 +29,12 @@ public class GithubCommitTask implements Runnable{
 	public void run() {
 		
 		// 每个线程进来都排队休息 5 分钟
-		TimeUnit.MINUTES.sleep(5);	
+		TimeUnit.MINUTES.sleep(1);	
 		
 		String todayCatalogue = GithubKit.todayCatalogue();  						//	摘录/2018/09
 		String todayFileName = GithubKit.todayFileName();							//	2018-09-01.md
 		String todayFilePath = todayCatalogue.concat("/").concat(todayFileName);	//	摘录/2018/09/2018-09-01.md
-		log.info("检查仓库【{}】今日【{}】文件是否存在", repository.getName(), todayFilePath);
+		log.debug("检查仓库【{}】今日【{}】文件是否存在", repository.getName(), todayFilePath);
 		
 		// 检查文件是否存在
 		try {

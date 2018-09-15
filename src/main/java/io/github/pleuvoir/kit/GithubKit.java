@@ -12,7 +12,6 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import io.github.pleuvoir.common.ExchangeConfiguration;
 import lombok.SneakyThrows;
 
 public class GithubKit {
@@ -40,7 +39,7 @@ public class GithubKit {
 	 */
 	@SneakyThrows
 	public static byte[] fetchFileInputStream(String downloadUrl) {
-		RestTemplate restTemplate = new ExchangeConfiguration().restTemplate();
+		RestTemplate restTemplate = ApplicationContextUtil.getBean(RestTemplate.class);
 		URI uri = new URI(downloadUrl);
 		ResponseEntity<byte[]> responseEntity = restTemplate.exchange(RequestEntity.get(uri).build(), byte[].class);  
 		return responseEntity.getBody();
