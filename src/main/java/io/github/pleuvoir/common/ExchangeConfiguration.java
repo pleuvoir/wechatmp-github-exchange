@@ -43,7 +43,7 @@ public class ExchangeConfiguration {
 	@Bean
 	public ConfigurableServletWebServerFactory webServerFactory() {
 		TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
-		factory.setPort(9000);
+		factory.setPort(80);
 		return factory;
 	}
 	
