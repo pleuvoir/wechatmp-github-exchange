@@ -49,9 +49,3 @@ java -jar wechatmp-github-exchange-1.0.0.jar
 - Maven3
 - Java8
 - [lombok](https://projectlombok.org/) 插件
-
-### 已知问题
-
-在 eclipse 中如果 Installed JREs 选择的是 jre 则在 eclipse 中连接 github 没有问题，但是却无法打包，如果改为了 jdk，则可以打包，却无法在 eclipse 中连接 github 
-
-解决方案为更新 jdk 目录下安全相关的包，可根据出现的错误具体解决
