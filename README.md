@@ -35,11 +35,3 @@ github:
 mvn clean package
 java -jar wechatmp-github-exchange-1.0.0.jar
 ```
-
-### 项目结构
-
-如若在本地运行，请确保你的计算机已经安装如下环境
-
-- Maven3
-- Java8
-- [lombok](https://projectlombok.org/) 插件
